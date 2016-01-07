@@ -1,0 +1,27 @@
+{
+  "name": "node-arecord",
+  "version": "0.0.1",
+  "description": "ALSA arecord wrapper for Node",
+  "main": "node-arecord.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wired8/node-arecord.git"
+  },
+  "keywords": [
+    "alsa",
+    "arecord",
+    "sound",
+    "sounds",
+    "wav",
+    "audio"
+  ],
+  "author": "Phil Jepsen <phil@wired8.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wired8/node-arecord/issues"
+  },
+  "homepage": "https://github.com/wired8/node-arecord"
+}
