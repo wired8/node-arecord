@@ -66,7 +66,7 @@ API
 
 Start the process and save the stdout of ALSA `arecord` tool to file
 
-(Example : `new Sound('/path/to/the/file/filename.wav').play();`)
+(Example : `new Sound({filename:'/path/to/the/file/filename.wav'}).record();`)
 
 
 
@@ -76,24 +76,25 @@ Example Usage
 ````javascript
 var Sound = require('node-arecord');
 
-// fire and forget:
-new Sound('/path/to/the/file/filename.wav').play();
+var sound = new Sound({
+ filename: '/path/to/the/file/filename.wav',
+ alsa_format: 'dat',
+ alsa_device: 'plughw:1,0'
+});
 
-// with ability to pause/resume:
-var music = new Sound('/path/to/the/file/filename.wav');
-music.play();
+sound.record();
 
 setTimeout(function () {
-	music.pause(); // pause the music after five seconds
+	sound.pause(); // pause the recording after five seconds
 }, 5000);
 
 setTimeout(function () {
-	music.resume(); // and resume it two seconds after pausing
+	sound.resume(); // and resume it two seconds after pausing
 }, 7000);
 
 // you can also listen for various callbacks:
-music.on('complete' function () {
-	console.log('Done with playback!');
+sound.on('complete' function () {
+	console.log('Done with recording!');
 });
 ````
 
