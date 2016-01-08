@@ -15,6 +15,8 @@ var	spawn = require('child_process').spawn,
 module.exports = function Sound(options) {
   events.EventEmitter.call(this);
   options = options || {};
+  this.debug = options.debug || false;
+  this.destination_folder = options.destination_folder || 'tmp';
   this.filename = options.filename;
   this.alsa_format = options.alsa_format || 'dat';
   this.alsa_device = options.alsa_device || 'plughw:1,0';
@@ -26,13 +28,26 @@ util.inherits(module.exports, events.EventEmitter);
 module.exports.prototype.record = function () {
   this.stopped = false;
   this.process = spawn('arecord', ['-D', this.alsa_device, '-f', this.alsa_format]
-    .concat(this.alsa_addn_args).concat(' ' + this.filename));
+    .concat(this.alsa_addn_args).concat(this.filename), {cwd: this.destination_folder});
   var self = this;
   this.process.on('exit', function (code, sig) {
     if (code !== null && sig === null) {
       self.emit('complete');
     }
   });
+
+  if (this.debug) {
+    this.process.stdout.on('data', function (data) {
+      console.log('Data: ' + data);
+    });
+    this.process.stderr.on('data', function (data) {
+      console.log('Error: ' + data);
+    });
+    this.process.on('close', function (code) {
+      console.log('arecord closed: ' + code);
+    });
+  }
+
 };
 module.exports.prototype.stop = function () {
   this.stopped = true;
