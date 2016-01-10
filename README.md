@@ -7,7 +7,7 @@ This module was initially intended to provide basic audio capabilities in the Ra
 
 ALSA stands for Advanced Linux Sound Architecture. It is a suite of hardware drivers, libraries and utilities which provide audio and MIDI functionality for the Linux operating system.
 
-arecord is a simple native ALSA wav player.
+arecord is a simple native ALSA wav recorder.
 
 Installation
 -----------
@@ -66,17 +66,19 @@ API
 
 Start the process and save the stdout of ALSA `arecord` tool to file
 
-(Example : `new Sound({filename:'/path/to/the/file/filename.wav'}).record();`)
+(Example : `new Sound({destination_folder: '/tmp', 'filename:'filename.wav'}).record();`)
 
 
 
 Example Usage
-------------
+-------------
 
 ````javascript
 var Sound = require('node-arecord');
 
 var sound = new Sound({
+ debug: true,    // Show stdout
+ destination_folder: '/tmp',
  filename: '/path/to/the/file/filename.wav',
  alsa_format: 'dat',
  alsa_device: 'plughw:1,0'
@@ -91,6 +93,10 @@ setTimeout(function () {
 setTimeout(function () {
 	sound.resume(); // and resume it two seconds after pausing
 }, 7000);
+
+setTimeout(function () {
+	sound.stop(); // stop after ten seconds
+}, 10000);
 
 // you can also listen for various callbacks:
 sound.on('complete' function () {
