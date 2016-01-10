@@ -1,6 +1,6 @@
 {
   "name": "node-arecord",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "ALSA arecord wrapper for Node",
   "main": "node-arecord.js",
   "scripts": {
