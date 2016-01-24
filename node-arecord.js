@@ -21,13 +21,15 @@ module.exports = function Sound(options) {
   this.alsa_format = options.alsa_format || 'dat';
   this.alsa_device = options.alsa_device || 'plughw:1,0';
   this.alsa_addn_args = options.alsa_addn_args || [];
+  this.alsa_channels = options.alsa_channels || '1';
+  this.alsa_rate = options.alsa_rate || '8000';
 };
 
 util.inherits(module.exports, events.EventEmitter);
 
 module.exports.prototype.record = function () {
   this.stopped = false;
-  this.process = spawn('arecord', ['-D', this.alsa_device, '-f', this.alsa_format]
+  this.process = spawn('arecord', ['-D', this.alsa_device, '-f', this.alsa_format, '-c', this.alsa_channels, '-r', this.alsa_rate]
     .concat(this.alsa_addn_args).concat(this.filename), {cwd: this.destination_folder});
   var self = this;
   this.process.on('exit', function (code, sig) {
